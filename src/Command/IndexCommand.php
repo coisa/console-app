@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace Console\Command;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,23 +20,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @package Console\Command
  */
-final class IndexCommand extends Command
+final class IndexCommand extends Command implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /** @var \PDO */
     private $pdo;
-
-    /** @var LoggerInterface */
-    private $logger;
 
     /**
      * IndexCommand constructor.
      *
-     * @param LoggerInterface $logger
      * @param \PDO $pdo
      */
-    public function __construct(LoggerInterface $logger, \PDO $pdo)
+    public function __construct(\PDO $pdo)
     {
-        $this->logger = $logger;
         $this->pdo = $pdo;
 
         parent::__construct();
