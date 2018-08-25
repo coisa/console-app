@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+/**
+ * @author Felipe Sayão Lobato Abreu <contato@felipeabreu.com.br>
+ */
+
+declare(strict_types=1);
+
+use GO\Scheduler;
+
+chdir(dirname(__DIR__));
+
+$container = require dirname(__DIR__) . '/config/container.php';
+
+/** @var Scheduler $scheduler */
+$scheduler = $container->get(Scheduler::class);
+$scheduler->run();

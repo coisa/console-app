@@ -1,0 +1,7 @@
+.git/
+.env
+.env.example
+.gitignore
+composer.lock
+docker-compose.yml
+Dockerfile
