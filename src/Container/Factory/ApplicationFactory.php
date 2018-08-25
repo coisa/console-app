@@ -29,7 +29,19 @@ final class ApplicationFactory
     public function __invoke(ContainerInterface $container): Application
     {
         $application = new Application();
+        $this->configure($container, $application);
 
+        return $application;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param Application $application
+     *
+     * @return Application
+     */
+    public function configure(ContainerInterface $container, Application $application): Application
+    {
         if ($container->has(CommandLoaderInterface::class)) {
             $commandLoader = $container->get(CommandLoaderInterface::class);
             $application->setCommandLoader($commandLoader);
