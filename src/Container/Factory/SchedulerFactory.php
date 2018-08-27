@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace Console\Container\Factory;
 
-use Cron\CronExpression;
 use GO\Scheduler;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
