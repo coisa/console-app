@@ -40,7 +40,7 @@ final class ApplicationFactory
      *
      * @return Application
      */
-    public function configure(ContainerInterface $container, Application $application): Application
+    private function configure(ContainerInterface $container, Application $application): Application
     {
         if ($container->has(CommandLoaderInterface::class)) {
             $commandLoader = $container->get(CommandLoaderInterface::class);

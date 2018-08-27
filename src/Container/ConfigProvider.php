@@ -11,7 +11,8 @@ namespace Console\Container;
 use Console\Container\Factory\ApplicationFactory;
 use Console\Container\Factory\ContainerCommandLoaderFactory;
 use Console\Container\Factory\EventDispatcherFactory;
-use Console\Container\Initializer\CommandNameInitializer;
+use Console\Container\Factory\SchedulerFactory;
+use GO\Scheduler;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
@@ -61,6 +62,7 @@ final class ConfigProvider
                 Application::class            => ApplicationFactory::class,
                 ContainerCommandLoader::class => ContainerCommandLoaderFactory::class,
                 EventDispatcher::class        => EventDispatcherFactory::class,
+                Scheduler::class              => SchedulerFactory::class,
             ],
         ];
     }

@@ -42,7 +42,7 @@ final class EventDispatcherFactory
      *
      * @return EventDispatcherInterface
      */
-    public function configure(
+    private function configure(
         ContainerInterface $container,
         EventDispatcherInterface $dispatcher
     ): EventDispatcherInterface {

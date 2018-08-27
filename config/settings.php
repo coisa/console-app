@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
+use GO\Scheduler;
+use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Zend\ConfigAggregator\ConfigAggregator;
 
 return [
@@ -14,7 +15,10 @@ return [
     ConfigAggregator::ENABLE_CACHE => getenv('ENABLE_CACHE') ?: false,
 
     # routes settings
-    ContainerCommandLoader::class  => require __DIR__ . '/routes.php',
+    CommandLoaderInterface::class  => require __DIR__ . '/routes.php',
+
+    # schedules settings
+    Scheduler::class               => require __DIR__ . '/schedules.php',
 
     # pdo settings
     \PDO::class                    => [

@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Console\Container\Factory;
 
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 
 /**
@@ -26,7 +27,7 @@ final class ContainerCommandLoaderFactory
     public function __invoke(ContainerInterface $container): ContainerCommandLoader
     {
         $config = $container->has('config') ? $container->get('config') : [];
-        $routes = $config[ContainerCommandLoader::class] ?? [];
+        $routes = $config[CommandLoaderInterface::class] ?? [];
 
         $loader = new class($container, $routes) extends ContainerCommandLoader
         {
