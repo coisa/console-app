@@ -7,6 +7,6 @@ declare(strict_types=1);
 
 return [
     '* * * * *' => [
-        'php /app/bin/console console:index'
+        'php /app/bin/console console:index >> /app/data/console.log',
     ]
 ];
