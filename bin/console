@@ -7,6 +7,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\NullOutput;
 
 chdir(dirname(__DIR__));
 
@@ -14,4 +15,4 @@ $container = require dirname(__DIR__) . '/config/container.php';
 
 /** @var Application $application */
 $application = $container->get(Application::class);
-$application->run();
+$application->run(null, new NullOutput());
