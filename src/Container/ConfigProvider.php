@@ -62,9 +62,6 @@ final class ConfigProvider
                 ContainerCommandLoader::class => ContainerCommandLoaderFactory::class,
                 EventDispatcher::class        => EventDispatcherFactory::class,
             ],
-            'initializers'       => [
-                CommandNameInitializer::class,
-            ]
         ];
     }
 }

@@ -26,7 +26,18 @@ final class ContainerCommandLoaderFactory
     public function __invoke(ContainerInterface $container): ContainerCommandLoader
     {
         $config = $container->has('config') ? $container->get('config') : [];
+        $routes = $config['routes'] ?? [];
 
-        return new ContainerCommandLoader($container, $config['routes'] ?? []);
+        $loader = new class($container, $routes) extends ContainerCommandLoader
+        {
+            public function get($name)
+            {
+                $command = parent::get($name);
+
+                return $command->setName($name);
+            }
+        };
+
+        return $loader;
     }
 }
