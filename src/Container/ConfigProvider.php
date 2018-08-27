@@ -10,15 +10,14 @@ namespace Console\Container;
 
 use Console\Container\Factory\ApplicationFactory;
 use Console\Container\Factory\ContainerCommandLoaderFactory;
-use Console\Container\Factory\ErrorListenerFactory;
 use Console\Container\Factory\EventDispatcherFactory;
 use Console\Container\Initializer\CommandNameInitializer;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
-use Symfony\Component\Console\EventListener\ErrorListener;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 
 /**
@@ -54,6 +53,9 @@ final class ConfigProvider
             'aliases'            => [
                 CommandLoaderInterface::class   => ContainerCommandLoader::class,
                 EventDispatcherInterface::class => EventDispatcher::class,
+            ],
+            'invokables'         => [
+                Stopwatch::class => Stopwatch::class
             ],
             'factories'          => [
                 Application::class            => ApplicationFactory::class,

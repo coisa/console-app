@@ -26,5 +26,8 @@
     },
     "scripts": {
         "post-create-project-cmd": "cp -v --no-clobber .env.example .env"
+    },
+    "require-dev": {
+        "symfony/stopwatch": "^4.1"
     }
 }
