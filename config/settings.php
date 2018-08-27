@@ -6,15 +6,15 @@ use Zend\ConfigAggregator\ConfigAggregator;
 
 return [
     # debug settings
-    'debug'                        => getenv('DEBUG') ?? false,
+    'debug'                        => getenv('DEBUG') ?: false,
 
     # config cache settings
     'config_cache_path'            => 'data/config-cache.php',
-    ConfigAggregator::ENABLE_CACHE => getenv('ENABLE_CACHE') ?? true,
+    ConfigAggregator::ENABLE_CACHE => getenv('ENABLE_CACHE') ?: false,
 
     # pdo settings
     \PDO::class    => [
-        'dsn'      => getenv('PDO_DSN'),
+        'dsn'      => getenv('PDO_DSN') ?: 'sqlite::memory:',
         'username' => getenv('PDO_USERNAME'),
         'passwd'   => getenv('PDO_PASSWD')
     ]
