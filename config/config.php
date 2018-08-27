@@ -13,7 +13,6 @@ use Zend\ConfigAggregator\ConfigAggregator;
 use Zend\ConfigAggregator\PhpFileProvider;
 
 $settings           = require __DIR__ . '/settings.php';
-$settings['routes'] = require __DIR__ . '/routes.php';
 
 $aggregator = new ConfigAggregator(
     [
