@@ -18,7 +18,6 @@ use GO\Scheduler;
 use Silly\Command\ExpressionParser;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
-use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -55,7 +54,7 @@ final class ConfigProvider
                 ReflectionBasedAbstractFactory::class,
             ],
             'aliases'            => [
-                CommandLoaderInterface::class   => ContainerCommandLoader::class,
+                CommandLoaderInterface::class   => ExpressionParserCommandLoader::class,
                 EventDispatcherInterface::class => EventDispatcher::class,
             ],
             'invokables'         => [
