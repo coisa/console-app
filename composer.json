@@ -18,7 +18,8 @@
         "symfony/console": "^4.1",
         "symfony/event-dispatcher": "^4.1",
         "peppeocchi/php-cron-scheduler": "^2.3",
-        "coisa/monolog": "1.0.x-dev"
+        "coisa/monolog": "1.0.x-dev",
+        "mnapoli/silly": "^1.7"
     },
     "autoload": {
         "psr-4": {

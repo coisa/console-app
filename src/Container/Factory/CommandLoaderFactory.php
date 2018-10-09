@@ -8,37 +8,32 @@ declare(strict_types=1);
 
 namespace Console\Container\Factory;
 
+use Console\CommandLoader\ExpressionParserCommandLoader;
 use Psr\Container\ContainerInterface;
+use Silly\Command\ExpressionParser;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
-use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
 
 /**
- * Class ContainerCommandLoaderFactory
+ * Class CommandLoaderFactory
  *
  * @package Console\Container\Factory
  */
-final class ContainerCommandLoaderFactory
+final class CommandLoaderFactory
 {
     /**
      * @param ContainerInterface $container
      *
-     * @return ContainerCommandLoader
+     * @return CommandLoaderInterface
      */
-    public function __invoke(ContainerInterface $container): ContainerCommandLoader
+    public function __invoke(ContainerInterface $container): CommandLoaderInterface
     {
         $config = $container->has('config') ? $container->get('config') : [];
         $routes = $config[CommandLoaderInterface::class] ?? [];
 
-        $loader = new class($container, $routes) extends ContainerCommandLoader
-        {
-            public function get($name)
-            {
-                $command = parent::get($name);
-
-                return $command->setName($name);
-            }
-        };
-
-        return $loader;
+        return new ExpressionParserCommandLoader(
+            $container,
+            $container->get(ExpressionParser::class),
+            $routes
+        );
     }
 }

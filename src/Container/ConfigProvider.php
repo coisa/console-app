@@ -8,11 +8,14 @@ declare(strict_types=1);
 
 namespace Console\Container;
 
+use Console\CommandLoader\ExpressionParserCommandLoader;
 use Console\Container\Factory\ApplicationFactory;
+use Console\Container\Factory\CommandLoaderFactory;
 use Console\Container\Factory\ContainerCommandLoaderFactory;
 use Console\Container\Factory\EventDispatcherFactory;
 use Console\Container\Factory\SchedulerFactory;
 use GO\Scheduler;
+use Silly\Command\ExpressionParser;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\Console\CommandLoader\ContainerCommandLoader;
@@ -56,13 +59,14 @@ final class ConfigProvider
                 EventDispatcherInterface::class => EventDispatcher::class,
             ],
             'invokables'         => [
-                Stopwatch::class => Stopwatch::class
+                Stopwatch::class        => Stopwatch::class,
+                ExpressionParser::class => ExpressionParser::class
             ],
             'factories'          => [
-                Application::class            => ApplicationFactory::class,
-                ContainerCommandLoader::class => ContainerCommandLoaderFactory::class,
-                EventDispatcher::class        => EventDispatcherFactory::class,
-                Scheduler::class              => SchedulerFactory::class,
+                Application::class                   => ApplicationFactory::class,
+                ExpressionParserCommandLoader::class => CommandLoaderFactory::class,
+                EventDispatcher::class               => EventDispatcherFactory::class,
+                Scheduler::class                     => SchedulerFactory::class,
             ],
         ];
     }

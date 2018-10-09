@@ -23,21 +23,6 @@ final class IndexCommand extends Command implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
-    /** @var \PDO */
-    private $pdo;
-
-    /**
-     * IndexCommand constructor.
-     *
-     * @param \PDO $pdo
-     */
-    public function __construct(\PDO $pdo)
-    {
-        $this->pdo = $pdo;
-
-        parent::__construct();
-    }
-
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
@@ -46,8 +31,9 @@ final class IndexCommand extends Command implements LoggerAwareInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->logger->info('Hello World!');
-
-        throw new \RuntimeException('Bye!');
+        $this->logger->info('Hello World!', [
+            'argv' => $input->getArguments(),
+            'options' => $input->getOptions()
+        ]);
     }
 }
