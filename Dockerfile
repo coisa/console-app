@@ -18,4 +18,4 @@ RUN composer install \
 
 RUN crontab /app/config/crontab.txt
 
-CMD /usr/sbin/crond -f -S
+CMD ["/usr/sbin/crond", "-f", "-S"]

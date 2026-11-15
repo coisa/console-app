@@ -7,8 +7,8 @@ use function FastForward\Config\config;
 
 $settings = require __DIR__ . '/settings.php';
 $sources = [$settings, ConfigProvider::class];
-foreach (['{global,*.global}.php', '{local,*.local}.php'] as $pattern) {
-    foreach (glob(__DIR__ . '/autoload/' . $pattern, GLOB_BRACE) ?: [] as $file) {
+foreach (['global.php', '*.global.php', 'local.php', '*.local.php'] as $pattern) {
+    foreach (glob(__DIR__ . '/autoload/' . $pattern) ?: [] as $file) {
         $sources[] = $file;
     }
 }
