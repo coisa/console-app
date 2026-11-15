@@ -78,7 +78,7 @@ final class SchedulerFactory
         string $script,
         string $interval,
         LoggerInterface $logger,
-        string $id = null
+        ?string $id = null
     ): void {
         $job = $scheduler->raw($script, [], $id);
         $job->at($interval);

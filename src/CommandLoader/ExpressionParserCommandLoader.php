@@ -25,7 +25,7 @@ final class ExpressionParserCommandLoader implements CommandLoaderInterface
     private $container;
 
     /** @var array */
-    private $commandMap;
+    private array $commandMap = [];
 
     /**
      * SillyComandLoader constructor.
@@ -49,7 +49,7 @@ final class ExpressionParserCommandLoader implements CommandLoaderInterface
     /**
      * @return string[]
      */
-    public function getNames()
+    public function getNames(): array
     {
         return array_keys($this->commandMap);
     }
@@ -59,7 +59,7 @@ final class ExpressionParserCommandLoader implements CommandLoaderInterface
      *
      * @return bool
      */
-    public function has($name): bool
+    public function has(string $name): bool
     {
         return array_key_exists($name, $this->commandMap) &&
             $this->container->has($this->commandMap[$name]['command']);
@@ -70,13 +70,17 @@ final class ExpressionParserCommandLoader implements CommandLoaderInterface
      *
      * @return Command
      */
-    public function get($name): Command
+    public function get(string $name): Command
     {
         if (!$this->has($name)) {
             throw new CommandNotFoundException(sprintf('Command "%s" does not exist.', $name));
         }
 
         $command = $this->container->get($this->commandMap[$name]['command']);
+
+        if ($command instanceof \Psr\Log\LoggerAwareInterface) {
+            $command->setLogger($this->container->get(\Psr\Log\LoggerInterface::class));
+        }
 
         $command->setName($name);
         $command->getDefinition()->addArguments($this->commandMap[$name]['arguments']);

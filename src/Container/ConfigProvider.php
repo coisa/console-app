@@ -21,7 +21,7 @@ use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
-use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+
 
 /**
  * Class ConfigProvider
@@ -50,9 +50,6 @@ final class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'abstract_factories' => [
-                ReflectionBasedAbstractFactory::class,
-            ],
             'aliases'            => [
                 CommandLoaderInterface::class   => ExpressionParserCommandLoader::class,
                 EventDispatcherInterface::class => EventDispatcher::class,

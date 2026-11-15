@@ -29,11 +29,13 @@ final class IndexCommand extends Command implements LoggerAwareInterface
      *
      * @return int|null|void
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->logger->info('Hello World!', [
             'argv' => $input->getArguments(),
             'options' => $input->getOptions()
         ]);
+
+        return Command::SUCCESS;
     }
 }

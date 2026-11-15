@@ -32,8 +32,8 @@ final class PdoFactory
 
         return new \PDO(
             $pdoConfig['dsn'],
-            $pdoConfig['username'],
-            $pdoConfig['passwd']
+            $pdoConfig['username'] === false ? null : $pdoConfig['username'],
+            $pdoConfig['passwd'] === false ? null : $pdoConfig['passwd']
         );
     }
 }
