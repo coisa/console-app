@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Console\Container\Factory;
 
+use FastForward\Config\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
@@ -27,7 +28,7 @@ final class PdoFactory
      */
     public function __invoke(ContainerInterface $container): \PDO
     {
-        $config = $container->get('config');
+        $config = $container->get(ConfigInterface::class)->toArray();
         $pdoConfig = $config[\PDO::class];
 
         return new \PDO(

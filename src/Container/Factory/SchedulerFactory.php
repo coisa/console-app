@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace Console\Container\Factory;
 
 use GO\Scheduler;
+use FastForward\Config\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -41,8 +42,7 @@ final class SchedulerFactory
      */
     private function configure(ContainerInterface $container, Scheduler $scheduler): Scheduler
     {
-        $config = $container->has('config') ?
-            $container->get('config') : [];
+        $config = $container->get(ConfigInterface::class)->toArray();
 
         if (!array_key_exists(Scheduler::class, $config)) {
             return $scheduler;

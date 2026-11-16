@@ -14,8 +14,8 @@ return [
     'config_cache_path'            => 'data/config-cache.php',
     'config_cache_enabled' => filter_var(getenv('ENABLE_CACHE') ?: false, FILTER_VALIDATE_BOOL),
 
-    # routes settings
-    CommandLoaderInterface::class  => require __DIR__ . '/routes.php',
+    # command services; public names and inputs live in attributes
+    CommandLoaderInterface::class  => require __DIR__ . '/commands.php',
 
     # schedules settings
     Scheduler::class               => require __DIR__ . '/schedules.php',

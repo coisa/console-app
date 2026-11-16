@@ -4,40 +4,38 @@ declare(strict_types=1);
 
 namespace Console\Container;
 
-use FastForward\Config\ConfigInterface;
+use Console\Container\Factory\ApplicationFactory;
+use Console\Container\Factory\CommandLoaderFactory;
+use Console\Container\Factory\PdoFactory;
+use Console\Container\Factory\SchedulerFactory;
+use GO\Scheduler;
 use Interop\Container\ServiceProviderInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 
-/** Adapts the sandbox's existing factory configuration to the Fast Forward container. */
-final readonly class SandboxServiceProvider implements ServiceProviderInterface
+/** Registers application services explicitly; configuration contains only values. */
+final class SandboxServiceProvider implements ServiceProviderInterface
 {
-    public function __construct(private ConfigInterface $config) {}
-
+    /** @return array<string, callable> Lazy factories keyed by service identifier. */
     public function getFactories(): array
     {
-        $factories = [
-            'config' => fn (): array => $this->config->toArray(),
+        return [
+            Application::class => new ApplicationFactory(),
+            CommandLoaderInterface::class => new CommandLoaderFactory(),
+            Scheduler::class => new SchedulerFactory(),
+            \PDO::class => new PdoFactory(),
             Logger::class => static fn (): Logger => new Logger('console', [new StreamHandler('php://stderr')]),
-            LoggerInterface::class => static fn (ContainerInterface $c): LoggerInterface => $c->get(Logger::class),
-            'logger' => static fn (ContainerInterface $c): LoggerInterface => $c->get(LoggerInterface::class),
-            'monolog' => static fn (ContainerInterface $c): LoggerInterface => $c->get(LoggerInterface::class),
+            LoggerInterface::class => static fn (ContainerInterface $container): LoggerInterface => $container->get(Logger::class),
+            'logger' => static fn (ContainerInterface $container): LoggerInterface => $container->get(LoggerInterface::class),
+            'monolog' => static fn (ContainerInterface $container): LoggerInterface => $container->get(LoggerInterface::class),
         ];
-        $dependencies = $this->config->get('dependencies');
-        foreach ($dependencies['invokables'] ?? [] as $id => $class) {
-            $factories[$id] = static fn () => new $class();
-        }
-        foreach ($dependencies['factories'] ?? [] as $id => $factory) {
-            $factories[$id] = static fn (ContainerInterface $c) => (new $factory())($c);
-        }
-        foreach ($dependencies['aliases'] ?? [] as $id => $target) {
-            $factories[$id] = static fn (ContainerInterface $c) => $c->get($target);
-        }
-        return $factories;
     }
 
+    /** @return array<string, callable> No implicit service mutations are required. */
     public function getExtensions(): array
     {
         return [];
