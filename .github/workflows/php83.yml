@@ -1,0 +1,30 @@
+name: PHP 8.3 compatibility
+on:
+  pull_request:
+  push:
+    branches: [master]
+permissions:
+  contents: read
+jobs:
+  compatibility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: pdo, pdo_mysql
+          tools: composer:v2
+          coverage: none
+      - run: composer validate --no-check-publish
+      - name: Resolve the real dependency graph without platform overrides
+        run: composer install --no-interaction --prefer-dist
+      - name: Lint application and tests
+        run: find src config tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - run: composer test
+      - name: Build production image
+        run: docker build --iidfile "$RUNNER_TEMP/console-image-id" .
+      - name: Smoke-test the production dependency graph
+        run: |
+          docker run --rm "$(cat "$RUNNER_TEMP/console-image-id")" php bin/console list
+          docker run --rm "$(cat "$RUNNER_TEMP/console-image-id")" php bin/console console:index smoke

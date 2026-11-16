@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use GO\Scheduler;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
-use Zend\ConfigAggregator\ConfigAggregator;
+
 
 return [
     # debug settings
@@ -12,10 +12,10 @@ return [
 
     # config cache settings
     'config_cache_path'            => 'data/config-cache.php',
-    ConfigAggregator::ENABLE_CACHE => getenv('ENABLE_CACHE') ?: false,
+    'config_cache_enabled' => filter_var(getenv('ENABLE_CACHE') ?: false, FILTER_VALIDATE_BOOL),
 
-    # routes settings
-    CommandLoaderInterface::class  => require __DIR__ . '/routes.php',
+    # command services; public names and inputs live in attributes
+    CommandLoaderInterface::class  => require __DIR__ . '/commands.php',
 
     # schedules settings
     Scheduler::class               => require __DIR__ . '/schedules.php',

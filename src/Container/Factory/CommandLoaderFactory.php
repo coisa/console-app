@@ -8,9 +8,9 @@ declare(strict_types=1);
 
 namespace Console\Container\Factory;
 
-use Console\CommandLoader\ExpressionParserCommandLoader;
+use Console\CommandLoader\AttributeCommandLoader;
+use FastForward\Config\ConfigInterface;
 use Psr\Container\ContainerInterface;
-use Silly\Command\ExpressionParser;
 use Symfony\Component\Console\CommandLoader\CommandLoaderInterface;
 
 /**
@@ -27,12 +27,11 @@ final class CommandLoaderFactory
      */
     public function __invoke(ContainerInterface $container): CommandLoaderInterface
     {
-        $config = $container->has('config') ? $container->get('config') : [];
+        $config = $container->get(ConfigInterface::class)->toArray();
         $routes = $config[CommandLoaderInterface::class] ?? [];
 
-        return new ExpressionParserCommandLoader(
+        return new AttributeCommandLoader(
             $container,
-            $container->get(ExpressionParser::class),
             $routes
         );
     }

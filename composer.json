@@ -1,6 +1,6 @@
 {
     "name": "coisa/console-app",
-    "description": "Console Application Skeleton",
+    "description": "PHP 8.3 console sandbox and application template for Fast Forward",
     "type": "project",
     "license": "Apache-2.0",
     "authors": [
@@ -10,16 +10,15 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "ext-PDO": "^7.1",
-        "ext-pdo_mysql": "^7.1",
-        "zendframework/zend-servicemanager": "^3.3",
-        "zendframework/zend-config-aggregator": "^1.1",
-        "symfony/console": "^4.1",
-        "symfony/event-dispatcher": "^4.1",
-        "peppeocchi/php-cron-scheduler": "^2.3",
-        "coisa/monolog": "1.0.x-dev",
-        "mnapoli/silly": "^1.7"
+        "php": "^8.3",
+        "ext-PDO": "*",
+        "ext-pdo_mysql": "*",
+        "fast-forward/container": "^1.10.1",
+        "fast-forward/config": "^1.7.4",
+        "monolog/monolog": "^3.0",
+        "symfony/console": "^7.4",
+        "peppeocchi/php-cron-scheduler": "^4.0",
+        "fast-forward/event-dispatcher": "^1.1.2"
     },
     "autoload": {
         "psr-4": {
@@ -27,9 +26,7 @@
         }
     },
     "scripts": {
-        "post-create-project-cmd": "cp -v --no-clobber .env.example .env"
-    },
-    "require-dev": {
-        "symfony/stopwatch": "^4.1"
+        "post-create-project-cmd": "cp -v --no-clobber .env.example .env",
+        "test": "php tests/smoke.php"
     }
 }
